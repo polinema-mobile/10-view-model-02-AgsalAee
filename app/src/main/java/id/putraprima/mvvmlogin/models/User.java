@@ -1,26 +1,48 @@
 package id.putraprima.mvvmlogin.models;
 
+import androidx.annotation.NonNull;
+import android.text.TextUtils;
+import android.util.Patterns;
+
 public class User {
-    private String nama,password;
+    @NonNull
+    private String mEmail;
+    @NonNull
+    private String mPassword;
+    private String infoMessage = "Login was successful";
 
-    public User(String nama, String password) {
-        this.nama = nama;
-        this.password = password;
+    public void setInfoMessage(String infoMessage) {
+        this.infoMessage = infoMessage;
     }
 
-    public String getNama() {
-        return nama;
+    public String getInfoMessage() {
+        return infoMessage;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public User(@NonNull final String email, @NonNull final String password) {
+        mEmail = email;
+        mPassword = password;
     }
 
+    @NonNull
+    public String getEmail() {
+        return mEmail;
+    }
+
+    public void setEmail(@NonNull final String email) {
+        mEmail = email;
+    }
+
+    @NonNull
     public String getPassword() {
-        return password;
+        return mPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(@NonNull final String password) {
+        mPassword = password;
+    }
+
+    public boolean isInputDataValid() {
+        return !TextUtils.isEmpty(getEmail()) && Patterns.EMAIL_ADDRESS.matcher(getEmail()).matches() && getPassword().length() > 5;
     }
 }
